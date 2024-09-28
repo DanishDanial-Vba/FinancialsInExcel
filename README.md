@@ -1,3 +1,45 @@
+# Macros/vba Financial Statement Generator
+
+## Description
+The **Financial Statement Generator** is an Excel VBA project designed to automate the generation of financial statements along with accompanying notes from a given trial balance dataset. This tool simplifies the process of financial reporting, making it easier for accountants and financial professionals to prepare accurate statements efficiently.
+
+## Features
+- Generates comprehensive financial statements from trial balance data.
+- Includes notes that explain various components of the financial statements.
+- Utilizes accepted accounting categories and hierarchy to ensure compliance with standard practices.
+- User-friendly interface within Excel for easy interaction.
+
+## Installation Instructions
+1. Download the project files from the repository.
+2. Open Microsoft Excel.
+3. Press `ALT + F11` to open the VBA editor.
+4. Import the downloaded VBA files into your Excel workbook.
+5. Follow any specific instructions provided in the files for setup.
+
+## Usage Instructions
+1. Input your trial balance data into the designated sheet with accepted categories.
+2. Run the Main() sub to start the macro
+3. Select the workbook and sheet containing the trial balance
+4. click on process button to generate financials. 
+5. Review the generated statements and notes for accuracy.
+6. Make any necessary adjustments to the data or settings.
+
+### Example
+```vba
+Public Sub Main()
+    
+    frm_home.Show vbModeless
+    
+End Sub
+
+**Contributing**
+**Contributions are welcome!** If you’d like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Push your changes and open a pull request.
+For larger changes, please open an issue first to discuss what you would like to change.
 
 **Accepted Account Categories**
 Below is the list of accepted account categories used in our VBA application:
