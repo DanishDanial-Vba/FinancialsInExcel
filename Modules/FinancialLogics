@@ -1,4 +1,4 @@
-'@IgnoreModule MoveFieldCloserToUsage
+
 Option Explicit
 Private tb As Ctrl_TrialBalance
 Private grouping As Ctrl_AccountsGrouping
