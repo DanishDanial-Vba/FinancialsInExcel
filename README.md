@@ -77,3 +77,96 @@ This is an illustrative list and if you want to modify it, change the financial 
 | Tax Computation           | Amount Owing / (prepaid) at beginning of year | Interest charged for underestimation of provisional tax |      |
 | Tax Computation           | Amount Owing / (prepaid) at beginning of year | Amount paid in respect of prior year |                             |
 | Tax Computation           | Tax owing/ (prepaid) for the current year | Provisional tax payment             |                                      |
+
+### Example
+```vba
+Private Sub GenerateIncomeStatement(ByVal sheet As Worksheet)
+    
+    Dim row As Long
+    Dim subtotal As Double
+    Dim tRevenue As Double
+    Dim tCOGS As Double
+    Dim tOpStk As Double
+    Dim tClStk As Double
+    Dim tPurchases As Double
+    Dim tExp As Double
+
+    row = 7
+    
+    ' Revenue
+    SetHeader sheet, row, "Revenue"
+    
+    subtotal = AddCreditAccountRowsWithoutPrefix(sheet, row, grouping.GetAccountsByFilter(tb, Category:="Revenue"), 1)
+    
+    With sheet.Cells(row, 2)
+        .value = "Total Revenue"
+        .Font.Bold = True
+    End With
+    sheet.Cells(row, 4).Formula = subtotal
+    NormalBordersWithFontBold sheet.Range(sheet.Cells(row, 4), sheet.Cells(row, 5))
+    tRevenue = subtotal
+    
+    row = row + 2
+    ' COGS
+    
+    SetHeader sheet, row, "Cost of Sales"
+    
+    subtotal = 0
+    
+    subtotal = AddDebitAccountRowsWithoutPrefix(sheet, row, grouping.GetAccountsByFilter(tb, Category:="COGS", SubCategoryL1:="Opening Inventory"), 1)
+    
+    tOpStk = subtotal
+    
+    row = row - 1
+    
+    subtotal = 0
+    subtotal = AddDebitAccountRowsWithoutPrefix(sheet, row, grouping.GetAccountsByFilter(tb, Category:="COGS", SubCategory:="Purchases"), 2)
+    
+    tPurchases = subtotal
+    
+    'Total Purchase + Opening Stock
+    
+       
+    sheet.Cells(row, 4).value = tOpStk + tPurchases
+    With sheet.Range(sheet.Cells(row, 4), sheet.Cells(row, 5))
+        .Borders(xlEdgeTop).LineStyle = xlContinuous
+        .Font.Bold = True
+    End With
+    
+    ' Closing Stock
+    subtotal = 0
+    subtotal = AddCreditAccountRowsWithoutPrefix(sheet, row, grouping.GetAccountsByFilter(tb, Category:="Assets", SubCategory:="Current Assets", SubCategoryL1:="Inventory"), 1)
+    tClStk = subtotal
+    
+    
+    SetHeader sheet, row, "Total Cost of Sales"
+    tCOGS = tOpStk + tPurchases + tClStk
+    sheet.Cells(row, 4).Formula = tCOGS
+    'NormalBordersWithFontBold sheet.Range(sheet.Cells(row - 1, 4), sheet.Cells(row - 1, 5))
+    
+
+    ' Gross Profit
+    row = row + 1
+    SetHeader sheet, row, "Gross Profit"
+    sheet.Cells(row, 4).value = tRevenue - tCOGS
+    TopThickBorders sheet.Range(sheet.Cells(row, 2), sheet.Cells(row, 5))
+
+    ' Expenses
+    row = row + 2
+    SetHeader sheet, row, "Expenses"
+    subtotal = 0
+    subtotal = AddDebitAccountRowsWithoutPrefix(sheet, row, grouping.GetAccountsByFilter(tb, Category:="Expense"), 1)
+    tExp = subtotal
+    
+    SetHeader sheet, row, "Total Expenses"
+    sheet.Cells(row, 4).value = subtotal
+    NormalBordersWithFontBold sheet.Range(sheet.Cells(row, 2), sheet.Cells(row, 5))
+                
+    ' Calculate Totals and Profits
+    row = row + 1
+    CalculateTotalsAndProfits sheet, row, tRevenue, tCOGS, tExp
+    computeTax tb
+    
+End Sub
+
+```
