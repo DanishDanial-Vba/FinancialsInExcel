@@ -19,18 +19,19 @@ The **Financial Statement Generator** is an Excel VBA project designed to automa
 ## Usage Instructions
 1. Input your trial balance data into the designated sheet with accepted categories.
 2. Run the Main() sub to start the macro
-3. Select the workbook and sheet containing the trial balance
-4. click on process button to generate financials. 
-5. Review the generated statements and notes for accuracy.
-6. Make any necessary adjustments to the data or settings.
 
-### Example
 ```vba
 Public Sub Main()
     
     frm_home.Show vbModeless
     
 End Sub
+
+3. Select the workbook and sheet containing the trial balance
+4. click on process button to generate financials. 
+5. Review the generated statements and notes for accuracy.
+6. Make any necessary adjustments to the data or settings.
+
 
 **Contributing**
 **Contributions are welcome!** If you’d like to contribute to this project, please follow these steps:
