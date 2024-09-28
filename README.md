@@ -26,7 +26,7 @@ Public Sub Main()
     frm_home.Show vbModeless
     
 End Sub
-
+```
 3. Select the workbook and sheet containing the trial balance
 4. click on process button to generate financials. 
 5. Review the generated statements and notes for accuracy.
